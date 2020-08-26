@@ -6,6 +6,7 @@ class Phonerecord{
   private $phone;
   private $email;
   private $source_id;
+  private $db;
   private $saved = false;
 
   public function __construct($source_id, $data){
@@ -28,21 +29,19 @@ class Phonerecord{
   }
 
   public function save(){
-    if(self::canSaverecord($this)){
+    $this->db = Database::getInstance()->_instance;
+    if($this->canSaverecord($this)){
       $this->savePhoneTable();
       $this->saveLastTimeTable();
       $this->saved = true;
-    } else {
-      // echo 'Not saving' . PHP_EOL;
-      // var_dump($this);
     }
+    
     return $this->saved;
   }
 
   private function savePhoneTable(){
-    $db = Database::getInstance()->_instance;
 
-    $phones_stm = $db->prepare('
+    $phones_stm = $this->db->prepare('
                       INSERT INTO phones (phone, name, email, source_id)
                       VALUES (:phone, :name, :email, :source_id)
                       ');
@@ -61,9 +60,8 @@ class Phonerecord{
   }
 
   private function saveLastTimeTable(){
-    $db = Database::getInstance()->_instance;
 
-    $time_stm= $db->prepare('
+    $time_stm= $this->db->prepare('
                       INSERT INTO lastaddtime (phone, source_id)
                       VALUES (:phone, :source_id)
                       ');
@@ -83,16 +81,18 @@ class Phonerecord{
     return intval(substr(strval($phone), -10));
   }
 
-  private static function canSaveRecord($record){
+  private function canSaveRecord(){
     return (
-      $record->name &&
-      $record->email &&
-      ( $record->phone != NULL) &&
-      self::timeToSaveIsOK($record)
+      $this->name &&
+      $this->email &&
+      ( $this->phone != NULL) &&
+      $this->timeToSaveIsOK()
     );
   }
 
-  private static function timeToSaveIsOK($record){
+  private function timeToSaveIsOK(){
+    $now = time();
+
     return true;
   }
 
