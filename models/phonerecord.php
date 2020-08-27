@@ -30,12 +30,11 @@ class Phonerecord{
 
   public function save(){
     $this->db = Database::getInstance()->_instance;
-    if($this->canSaverecord($this)){
+    if($this->canSaverecord()){
       $this->savePhoneTable();
-      $this->saveLastTimeTable();
       $this->saved = true;
     }
-    
+
     return $this->saved;
   }
 
@@ -52,11 +51,28 @@ class Phonerecord{
               'source_id' => $this->source_id,
       ];
 
-    try {
      $res = $phones_stm->execute( $phones_params );
-         } catch (PDOException $e){
-          echo $e->getMessage();
-     };
+  }
+
+  private function getLastTimeSaved(){
+    $time_stm= $this->db->prepare('
+                      SELECT UNIX_TIMESTAMP(time) AS time FROM lastaddtime
+                      WHERE (phone = :phone AND source_id = :source_id)
+                      ');
+    $time_params = [
+              'phone'     => $this->phone,
+              'source_id' => $this->source_id,
+      ];
+    $time_stm->execute($time_params);
+    $last_time_saved = 0;
+
+    foreach ($time_stm as $row) {
+      if($last_time_saved < $row['time']){
+        $last_time_saved = $row['time'];
+      }
+    }
+
+    return $last_time_saved;
   }
 
   private function saveLastTimeTable(){
@@ -70,11 +86,21 @@ class Phonerecord{
               'source_id' => $this->source_id,
       ];
 
-    try {
      $res = $time_stm->execute( $time_params );
-         } catch (PDOException $e){
-          echo $e->getMessage();
-     };
+  }
+
+  private function updateLastTimeSaved(){
+
+      $time_stm= $this->db->prepare('
+                      UPDATE lastaddtime SET time = CURRENT_TIMESTAMP 
+                      WHERE phone = :phone AND source_id = :source_id
+                      ');
+      $time_params = [
+              'phone'     => $this->phone,
+              'source_id' => $this->source_id,
+      ];
+
+      $time_stm->execute( $time_params );
   }
 
   private static function phoneNormalize($phone){
@@ -91,9 +117,22 @@ class Phonerecord{
   }
 
   private function timeToSaveIsOK(){
-    $now = time();
 
-    return true;
+    $no_save_period = Config::get('NO_SAVE_PERIOD');
+
+    $last_time_saved = $this->getLastTimeSaved();
+
+    if(!$last_time_saved) {
+      $this->saveLastTimeTable();
+      return true;
+    }
+
+    if ((time() - $last_time_saved) > $no_save_period){
+      $this->updateLastTimeSaved();
+      return true;
+    }
+
+    return false;
   }
 
 }
