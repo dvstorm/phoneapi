@@ -28,11 +28,9 @@ ALTER TABLE `lastaddtime` ADD INDEX( `phone`);
 
 $result = $db->exec($sql);
 
-echo 'Database created' . PHP_EOL;
-
 if (array_key_exists('records', $_GET)){
   $records_num = $_GET['records'];
-  var_dump($records_num);
+  $records_created = 0;
   for($i=0;$i<$records_num;$i++){
     $name = ucfirst(self::gen(rand(3,8))) . " " . ucfirst(self::gen(rand(3,8)));
     $email = self::gen(rand(3,8)) . "@" . self::gen(rand(3,8)) . '.' .self::gen(3);
@@ -40,14 +38,15 @@ if (array_key_exists('records', $_GET)){
     $phone = rand(9999999990, 9999999999);
     $source_id = rand(1,15);
     $phoneRecord = new Phonerecord(
-      $source_id, 
+      $source_id,
       [
         'name' => $name,
         'phone' => $phone,
-        'email' => $email,  
+        'email' => $email,
       ]);
-    $phoneRecord->save();
+    if($phoneRecord->save()) { $records_created++; };
   }
+  echo json_encode(['record_created' => $records_created,]);
 }
   }
 
