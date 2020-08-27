@@ -15,7 +15,9 @@ class Database
 			'mysql:host=' . $db_host . ';dbname=' . $db_name,
 	    	$db_user,
 	    	$db_pass,
-        [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"]
+        [ PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'",
+          PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
       );
   }
  

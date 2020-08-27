@@ -22,13 +22,15 @@ class contactsController extends Controller{
     }
 
     elseif ($_SERVER['REQUEST_METHOD'] == 'GET'){
-
+      $recordStorage = new Recordstorage();
+      foreach($_GET as $method => $params){
+        if(method_exists($recordStorage, $method)){
+          $result = $recordStorage->$method($params);
+          var_dump($result);
+          // echo json_encode($result);
+        }
+      }
     }
-    // echo 'This is contactsController' . PHP_EOL;
-    // var_dump($_SERVER['REQUEST_METHOD']);
-    // var_dump($_GET);
-    // var_dump($_POST);
-    // var_dump($_REQUEST);
   }
 }
 

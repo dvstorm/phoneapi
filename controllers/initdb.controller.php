@@ -26,10 +26,40 @@ CREATE TABLE `lastaddtime` (
 ALTER TABLE `lastaddtime` ADD INDEX( `phone`);
 ";
 
-    $result = $db->exec($sql);
+$result = $db->exec($sql);
 
-    echo 'This is initdbController' . PHP_EOL;
-    echo 'Database created' . PHP_EOL;
+echo 'Database created' . PHP_EOL;
+
+if (array_key_exists('records', $_GET)){
+  $records_num = $_GET['records'];
+  var_dump($records_num);
+  for($i=0;$i<$records_num;$i++){
+    $name = ucfirst(self::gen(rand(3,8))) . " " . ucfirst(self::gen(rand(3,8)));
+    $email = self::gen(rand(3,8)) . "@" . self::gen(rand(3,8)) . '.' .self::gen(3);
+    // $phone = rand(1111111111, 9999999999);
+    $phone = rand(9999999990, 9999999999);
+    $source_id = rand(1,15);
+    $phoneRecord = new Phonerecord(
+      $source_id, 
+      [
+        'name' => $name,
+        'phone' => $phone,
+        'email' => $email,  
+      ]);
+    $phoneRecord->save();
+  }
+}
+  }
+
+  private static function gen($charNumber){
+    $characters = 'abcdefghijklmnopqrstuvwxyz';
+    $randomString = '';
+    for ($i = 0; $i < $charNumber; $i++) {
+      $index = rand(0, strlen($characters) - 1);
+      $randomString .= $characters[$index];
+    }
+
+    return $randomString;
   }
 }
 
