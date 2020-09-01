@@ -1,0 +1,27 @@
+{
+  "name": "phoneapilocal",
+  "version": "1.0.0",
+  "description": "1. Написать API для приема контактных данных клиентов, с возможностью: \t1.1 Добавлять данные в базу массивом, например:   ```javascript \t\tPOST /contacts \t\t{ \t\t\tsource_id: 1, \t\t\titems: [{ \t\t\t\t\"name\": \"Анна\", \t\t\t\t\"phone\": 9001234453, \t\t\t\t\"email\": \"mail1@gmail.com\" \t\t\t}, { \t\t\t\t\"name\": \"Иван\", \t\t\t\t\"phone\": \"+79001234123\", \t\t\t\t\"email\": \"mail2@gmail.com\" \t\t\t}] \t\t} ``` \t\t- `source_id` - id источника контактов, для примера достаточно 1 и 2 \t\t- `phone` в бд сохраняем в формате без +7 (10 цифр) \t\t- `phone` не уникально, но может добавляться максимум 1 раз в сутки для каждого `source_id`",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvstorm/phoneapi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dvstorm/phoneapi/issues"
+  },
+  "homepage": "https://github.com/dvstorm/phoneapi#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-less": "^4.0.1",
+    "gulp-livereload": "^4.0.2"
+  }
+}

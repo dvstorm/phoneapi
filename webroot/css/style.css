@@ -1,0 +1,45 @@
+body #add-phone-card {
+  display: none;
+}
+body #add-phone-card .card-body h5 {
+  display: inline;
+}
+body #add-phone-card .card-body .add-icon .bi-plus-circle-fill {
+  fill: #5c9aff;
+  cursor: pointer;
+}
+body #add-phone-card .card-body .add-icon .bi-plus-circle-fill:hover {
+  fill: white;
+}
+body #add-phone-card .card-body form .btn {
+  margin-top: 15px;
+  background-color: #086297;
+}
+body #add-phone-card .card-body form .inputs_group {
+  margin: 10px;
+  border: 2px solid #5c9aff;
+  border-radius: 10px;
+}
+body #add-phone-card .card-body form .inputs_group .bi-x-circle-fill {
+  cursor: pointer;
+  margin-top: 29px;
+  fill: #5c9aff;
+}
+body #add-phone-card .card-body form .inputs_group .bi-x-circle-fill:hover {
+  fill: white;
+}
+body #init-db-card {
+  display: none;
+}
+body #init-db-card .card .card-body {
+  background-color: #440000;
+}
+body #init-db-card .card .card-body form .btn {
+  margin-top: 15px;
+}
+body #search-phone-card .card .card-body {
+  background-color: #008a0b;
+}
+body #search-phone-card .card .card-body form .btn {
+  margin-top: 15px;
+}
