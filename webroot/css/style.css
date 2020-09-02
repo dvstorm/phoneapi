@@ -9,7 +9,7 @@ body .loading {
   align-items: center;
 }
 body #add-phone-card {
-  display: block;
+  display: none;
 }
 body #add-phone-card .card-body h5 {
   display: inline;
@@ -51,11 +51,18 @@ body #init-db-card .card .card-body form .btn {
   margin-top: 15px;
 }
 body #search-phone-card {
-  display: none;
+  display: block;
 }
 body #search-phone-card .card .card-body {
   background-color: #008a0b;
 }
 body #search-phone-card .card .card-body form .btn {
   margin-top: 15px;
+}
+body #search-phone-card .card .card-body table {
+  background-color: white;
+  margin-top: 10px;
+}
+body #search-phone-card .card .card-body table {
+  display: none;
 }

@@ -25,7 +25,7 @@ class contactsController extends Controller{
       foreach($_GET as $method => $params){
         if(method_exists($recordStorage, $method)){
           $result = $recordStorage->$method($params);
-          var_dump($result);
+          echo json_encode($result);
         }
       }
     }

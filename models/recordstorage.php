@@ -9,6 +9,9 @@ class Recordstorage{
   }
 
   public function phone($num){
+    if(is_string($num)){
+      $num = intval(substr($num, -10));
+    }
     $result = [];
 
     $stm= $this->db->prepare(' SELECT * FROM phones WHERE phone = :phone ');

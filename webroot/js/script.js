@@ -2,7 +2,57 @@ $(document).ready(function(){
   initShowCardButtons();
   initDbCard();
   initAddCard();
+  initSearchCard();
 });
+
+function initSearchCard(){
+  const searchForm = $("#search-form");
+  const table = $("#search-phone-card table");
+
+  searchForm.submit( function(e){
+    e.preventDefault();
+    const loadingSpinner = $(".loading");
+
+    let data = new FormData(e.target);
+    let phone = data.get("phone");
+
+    loadingSpinner.css("display", "flex");
+    $.ajax('contacts', {
+      method: "GET",
+      data:  {"phone": phone},
+    })
+      .then(
+        function success(data) {
+          loadingSpinner.css("display", "none");
+          data = JSON.parse(data);
+          appendTable(data);
+          table.css("display", "table")
+        },
+        function fail(data, status) {
+          loadingSpinner.css("display", "none");
+        }
+      );
+  });
+}
+
+function appendTable(data){
+  const rowDummy = $("<tr><td></td><td></td><td></td><td></td></tr>");
+  const table = $("#search-phone-card table tbody");
+  let rows = $("#search-phone-card table tbody tr");
+
+  rows.each(function(i, item){
+    item.remove();
+  })
+
+  data.forEach(function(item){
+    let newItem = rowDummy.clone();
+    newItem.find("td").eq(0).text(item.source_id);
+    newItem.find("td").eq(1).text(item.name);
+    newItem.find("td").eq(2).text(item.email);
+    newItem.find("td").eq(3).text(item.phone);
+    newItem.appendTo(table);
+  });
+}
 
 function initAddCard(){
   const moreRecords = $("#add-phone-card .add-icon");
@@ -47,8 +97,6 @@ function initAddCard(){
       };
       postData.items.push(item);
     })
-
-    console.log(postData);
 
     loadingSpinner.css("display", "flex");
     $.ajax('contacts', {
