@@ -35,7 +35,7 @@ if (array_key_exists('records', $_GET)){
     $name = ucfirst(self::gen(rand(3,8))) . " " . ucfirst(self::gen(rand(3,8)));
     $email = self::gen(rand(3,8)) . "@" . self::gen(rand(3,8)) . '.' .self::gen(3);
     // $phone = rand(1111111111, 9999999999);
-    $phone = rand(9999999990, 9999999999);
+    $phone = rand(1099999990, 9999999999);
     $source_id = rand(1,15);
     $phoneRecord = new Phonerecord(
       $source_id,
@@ -46,7 +46,7 @@ if (array_key_exists('records', $_GET)){
       ]);
     if($phoneRecord->save()) { $records_created++; };
   }
-  echo json_encode(['record_created' => $records_created,]);
+  echo json_encode(['records_created' => $records_created,]);
 }
   }
 

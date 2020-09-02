@@ -1,5 +1,15 @@
-body #add-phone-card {
+body .loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 100;
   display: none;
+  justify-content: center;
+  align-items: center;
+}
+body #add-phone-card {
+  display: block;
 }
 body #add-phone-card .card-body h5 {
   display: inline;
@@ -15,20 +25,23 @@ body #add-phone-card .card-body form .btn {
   margin-top: 15px;
   background-color: #086297;
 }
-body #add-phone-card .card-body form .inputs_group {
+body #add-phone-card .card-body form .inputs_group .input {
   margin: 10px;
   border: 2px solid #5c9aff;
   border-radius: 10px;
 }
-body #add-phone-card .card-body form .inputs_group .bi-x-circle-fill {
+body #add-phone-card .card-body form .inputs_group .input .bi-x-circle-fill {
   cursor: pointer;
   margin-top: 29px;
   fill: #5c9aff;
 }
-body #add-phone-card .card-body form .inputs_group .bi-x-circle-fill:hover {
+body #add-phone-card .card-body form .inputs_group .input .bi-x-circle-fill:hover {
   fill: white;
 }
 body #init-db-card {
+  display: none;
+}
+body #init-db-card .card .message {
   display: none;
 }
 body #init-db-card .card .card-body {
@@ -36,6 +49,9 @@ body #init-db-card .card .card-body {
 }
 body #init-db-card .card .card-body form .btn {
   margin-top: 15px;
+}
+body #search-phone-card {
+  display: none;
 }
 body #search-phone-card .card .card-body {
   background-color: #008a0b;

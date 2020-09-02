@@ -5,7 +5,6 @@ class contactsController extends Controller{
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       $data = json_decode(file_get_contents('php://input'), true);
-
       if( array_key_exists('source_id', $data) && array_key_exists('items', $data) ){
         $records_saved = 0;
         $source_id = $data['source_id'];
@@ -27,7 +26,6 @@ class contactsController extends Controller{
         if(method_exists($recordStorage, $method)){
           $result = $recordStorage->$method($params);
           var_dump($result);
-          // echo json_encode($result);
         }
       }
     }
